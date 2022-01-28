@@ -12,7 +12,8 @@ name = input("client name : ")
 
 done =True
 while done:
-    client.send(input("MESSAGE: ").encode('utf-8'))
+    reply=input("MESSAGE: ") + f"--{name}"
+    client.send(reply.encode('utf-8'))
     msg = client.recv(1024).decode('utf-8')
     if msg == 'quit':
         done=False

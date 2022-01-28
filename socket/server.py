@@ -10,15 +10,20 @@ server.bind((HOST,PORT))
 
 server.listen()
 
-client, address = server.accept()
+
 
 done = True
 
 
 while done:
-    msg = client.recv(1024).decode('utf-8')
-    if msg=='quit':
-        done = False
-    else:
-        print(msg)
-    client.send(input("message: ").encode('utf-8'))
+    client, address = server.accept()
+    print(f'connected: {address}')
+    while client:
+        msg = client.recv(1024).decode('utf-8')
+        if msg=='quit':
+            done = False
+            client.close()
+        else:
+            print(msg)
+        reply=input("message: ") +"--server"
+        client.send(reply.encode('utf-8'))
